@@ -4,27 +4,29 @@ import kotlinx.coroutines.flow.*
 // Hands-on 3: StateFlow untuk Counter
 // Tugas: Implementasikan counter sederhana menggunakan StateFlow.
 // Counter harus bisa increment, decrement, dan reset.
-//
-// CATATAN: File ini belum bisa dijalankan sampai kamu melengkapi
-// semua TODO di bawah — itu normal untuk latihan ini!
 
 class CounterManager {
-    // TODO: Buat MutableStateFlow dengan nilai awal 0
-    // private val _count = ???
+    // 1. Buat MutableStateFlow dengan nilai awal 0
+    private val _count = MutableStateFlow(0)
 
-    // TODO: Expose sebagai StateFlow (read-only)
-    // val count: StateFlow<Int> = ???
+    // 2. Expose sebagai StateFlow (read-only) untuk dikonsumsi dari luar
+    val count: StateFlow<Int> = _count.asStateFlow()
 
     fun increment() {
-        // TODO: Tambah nilai count
+        // 3. Tambah nilai count
+        _count.value += 1
     }
 
     fun decrement() {
-        // TODO: Kurangi nilai count (minimum 0)
+        // 4. Kurangi nilai count dengan batas minimum 0
+        if (_count.value > 0) {
+            _count.value -= 1
+        }
     }
 
     fun reset() {
-        // TODO: Reset ke 0
+        // 5. Reset ke 0
+        _count.value = 0
     }
 }
 

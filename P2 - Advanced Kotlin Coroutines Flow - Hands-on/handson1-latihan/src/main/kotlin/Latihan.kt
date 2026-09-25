@@ -16,14 +16,20 @@ suspend fun fetchUserPosts(userId: String): List<String> {
 }
 
 fun main() = runBlocking {
-    // TODO 1: Jalankan fetchUserProfile dan fetchUserPosts secara PARALEL dengan async
-    // TODO 2: Tunggu kedua hasil dengan await(), lalu tampilkan dengan println
-    // TODO 3: Ukur waktu eksekusi (harus mendekati 1000ms, bukan 1800ms)
-
     val startTime = System.currentTimeMillis()
 
-    // Kode kamu di sini...
+    // 1: Jalankan fetchUserProfile dan fetchUserPosts secara PARALEL dengan async
+    val profileDeferred = async { fetchUserProfile("user123") }
+    val postsDeferred = async { fetchUserPosts("user123") }
+
+    // 2: Tunggu kedua hasil dengan await(), lalu tampilkan dengan println
+    val profile = profileDeferred.await()
+    val posts = postsDeferred.await()
+    
+    println("Hasil: $profile | $posts")
 
     val endTime = System.currentTimeMillis()
+    
+    // 3: Ukur waktu eksekusi (harus mendekati 1000ms, bukan 1800ms)
     println("Waktu: ${endTime - startTime}ms")
 }
