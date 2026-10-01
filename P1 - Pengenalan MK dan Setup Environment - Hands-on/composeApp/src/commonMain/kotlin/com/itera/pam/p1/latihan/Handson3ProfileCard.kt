@@ -1,6 +1,10 @@
 package com.itera.pam.p1.latihan
 
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Card
+import com.itera.pam.p1.getPlatformNameimport androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,18 +17,19 @@ import androidx.compose.ui.unit.dp
 // CATATAN: fungsi ini belum menampilkan apa-apa selain placeholder di bawah —
 // lengkapi semua TODO supaya kartu profil muncul dengan benar.
 
+/**
+ * Tampilan kartu profil dasar yang berisi identitas dan nama platform saat ini.
+ */
 @Composable
 fun Handson3Screen() {
-    // TODO 1: Bungkus semua konten dengan:
-    //         Card(modifier = Modifier.fillMaxWidth().padding(16.dp)) { ... }
-    // TODO 2: Di dalam Card, buat Column(modifier = Modifier.padding(16.dp))
-    // TODO 3: Di dalam Column, tambahkan Text() untuk nama kamu
-    // TODO 4: Tambahkan Text() untuk NIM kamu
-    // TODO 5: Tambahkan Row { } berisi Text("Platform: ") dan
-    //         Text(getPlatformName()) (import com.itera.pam.p1.getPlatformName)
-
-    Text(
-        "Belum diimplementasikan — lengkapi TODO 1-5 di atas",
-        modifier = Modifier.padding(16.dp)
-    )
+    Card(modifier = Modifier.fillMaxWidth().padding(16.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text("Nama: Fulan")
+            Text("NIM: 123456")
+            Row {
+                Text("Platform: ")
+                Text(getPlatformName())
+            }
+        }
+    }
 }

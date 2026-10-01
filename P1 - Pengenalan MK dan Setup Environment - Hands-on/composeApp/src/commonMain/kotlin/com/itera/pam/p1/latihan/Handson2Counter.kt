@@ -1,6 +1,9 @@
 package com.itera.pam.p1.latihan
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberimport androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -14,21 +17,23 @@ import androidx.compose.ui.unit.dp
 // menggunakan remember { mutableStateOf(...) } agar UI otomatis recompose
 // setiap kali nilainya berubah.
 
+/**
+ * Tampilan penghitung sederhana yang otomatis menyesuaikan angka
+ * saat tombol tambah atau kurang ditekan.
+ */
 @Composable
 fun Handson2Screen() {
-    // TODO 1: Buat state `count` dengan nilai awal 0:
-    //         var count by remember { mutableStateOf(0) }
-    // (butuh import androidx.compose.runtime.getValue/setValue/mutableStateOf/remember)
+    var count by remember { mutableStateOf(0) }
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Hands-on 2: Counter")
-        Text("Nilai: ???") // TODO 2: ganti "???" dengan nilai count
+        Text("Nilai: $count") 
 
         Row {
-            Button(onClick = { /* TODO 3: tambah count */ }) {
+            Button(onClick = { count++ }) {
                 Text("+")
             }
-            Button(onClick = { /* TODO 4: kurangi count */ }) {
+            Button(onClick = { count-- }) {
                 Text("-")
             }
         }

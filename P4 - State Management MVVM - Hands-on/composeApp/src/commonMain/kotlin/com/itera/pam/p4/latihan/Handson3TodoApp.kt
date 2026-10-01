@@ -1,6 +1,12 @@
 package com.itera.pam.p4.latihan
 
-import androidx.compose.foundation.layout.Column
+import kotlinx.coroutines.flow.update
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Button
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.Checkboximport androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,39 +40,53 @@ data class TodoUiState(
     val input: String = ""
 )
 
-// 2. ViewModel
+/**
+ * Pengelola data tugas yang mengatur daftar dan interaksi pengguna.
+ */
 class TodoViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(TodoUiState())
     val uiState: StateFlow<TodoUiState> = _uiState.asStateFlow()
 
     fun onInputChange(text: String) {
-        // TODO: update _uiState.input dengan `text`, gunakan _uiState.update { it.copy(input = text) }
+        _uiState.update { it.copy(input = text) }
     }
 
     fun addTodo() {
-        // TODO: tambahkan Todo baru ke uiState.todos dari uiState.input (id boleh pakai todos.size),
-        //       lalu kosongkan input. Jangan tambahkan jika input blank.
+        if (_uiState.value.input.isNotBlank()) {
+            val newTodo = Todo(id = _uiState.value.todos.size, text = _uiState.value.input, done = false)
+            _uiState.update { it.copy(todos = it.todos + newTodo, input = "") }
+        }
     }
 
     fun toggleTodo(id: Int) {
-        // TODO: toggle `done` untuk Todo dengan id yang cocok
-        //       (map list, ganti item yang id-nya sama dengan copy(done = !done))
+        _uiState.update { state ->
+            val updatedTodos = state.todos.map {
+                if (it.id == id) it.copy(done = !it.done) else it
+            }
+            state.copy(todos = updatedTodos)
+        }
     }
 }
 
-// 3. Compose UI
+/**
+ * Tampilan daftar tugas yang datanya dikendalikan oleh TodoViewModel.
+ */
 @Composable
 fun Handson3Screen(viewModel: TodoViewModel = viewModel { TodoViewModel() }) {
     val uiState by viewModel.uiState.collectAsState()
 
     Column(modifier = Modifier.padding(16.dp)) {
         Text("Latihan 3: Todo App dengan ViewModel")
-        Text("Belum diimplementasikan — lengkapi TODO di TodoViewModel dan UI di bawah ini")
 
-        // TODO: Implement UI:
-        //  - OutlinedTextField untuk input (value = uiState.input, onValueChange = viewModel::onInputChange)
-        //  - Button "Tambah" -> viewModel.addTodo()
-        //  - LazyColumn menampilkan uiState.todos, tiap item pakai Row + Checkbox(checked = todo.done,
-        //    onCheckedChange = { viewModel.toggleTodo(todo.id) }) + Text(todo.text)
+        OutlinedTextField(value = uiState.input, onValueChange = viewModel::onInputChange)
+        Button(onClick = { viewModel.addTodo() }) { Text("Tambah") }
+        LazyColumn {
+            items(uiState.todos) { todo ->
+                Row(verticalAlignment = androidx.compose.ui.Alignment.CenterVertically) {
+                    Checkbox(checked = todo.done, onCheckedChange = { viewModel.toggleTodo(todo.id) })
+                    Text(todo.text)
+                }
+            }
+        }
     }
 }

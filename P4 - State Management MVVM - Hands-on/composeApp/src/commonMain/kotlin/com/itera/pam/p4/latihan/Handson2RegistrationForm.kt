@@ -25,17 +25,21 @@ import androidx.compose.ui.unit.dp
 // [ ] Preview yang menampilkan "Hello, [name]!"
 // [ ] Gunakan 1 komponen untuk kedua field
 
-// Stateless TextField component
+/**
+ * Komponen kotak isian teks yang serbaguna, hanya menerima instruksi dari luar (induknya).
+ */
 @Composable
 fun LabeledTextField(
     label: String,
     value: String,
     onValueChange: (String) -> Unit
 ) {
-    // TODO: Implement dengan OutlinedTextField(value = value, onValueChange = onValueChange, label = { Text(label) })
+    OutlinedTextField(value = value, onValueChange = onValueChange, label = { Text(label) })
 }
 
-// Parent yang menyimpan state
+/**
+ * Formulir pendaftaran yang menyimpan dan mengatur data isian pengguna.
+ */
 @Composable
 fun Handson2Screen() {
     var name by remember { mutableStateOf("") }
@@ -49,7 +53,11 @@ fun Handson2Screen() {
             value = name,
             onValueChange = { name = it }
         )
-        // TODO: Tambahkan email field pakai LabeledTextField yang sama, hoisted ke `email`
-        // TODO: Tampilkan preview data, misal: Text("Hello, $name! Email: $email")
+        LabeledTextField(
+            label = "Email",
+            value = email,
+            onValueChange = { email = it }
+        )
+        Text("Hello, $name! Email: $email")
     }
 }

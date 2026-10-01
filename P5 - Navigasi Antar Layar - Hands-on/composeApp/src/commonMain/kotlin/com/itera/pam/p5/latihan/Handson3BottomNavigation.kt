@@ -32,6 +32,9 @@ private val tabs = listOf(
     Tab("profil", "Profil"),
 )
 
+/**
+ * Layar utama dengan bilah navigasi di bawah yang bisa berpindah-pindah antar menu tanpa kehilangan status.
+ */
 @Composable
 fun Handson3Screen() {
     val navController = rememberNavController()
@@ -45,20 +48,13 @@ fun Handson3Screen() {
                 tabs.forEach { tab ->
                     NavigationBarItem(
                         selected = currentRoute == tab.route,
-                        onClick = {
-                            // BUG SENGAJA: navigate tanpa opsi popUpTo/launchSingleTop/
-                            // restoreState menyebabkan back stack menumpuk setiap kali
-                            // pindah tab.
-                            //
-                            // TODO: ganti baris di bawah dengan:
-                            // navController.navigate(tab.route) {
-                            //     popUpTo(navController.graph.findStartDestination().id) {
-                            //         saveState = true
-                            //     }
-                            //     launchSingleTop = true
-                            //     restoreState = true
-                            // }
-                            navController.navigate(tab.route)
+                            navController.navigate(tab.route) {
+                                popUpTo(navController.graph.findStartDestination().id) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
                         },
                         icon = { },
                         label = { Text(tab.label) }

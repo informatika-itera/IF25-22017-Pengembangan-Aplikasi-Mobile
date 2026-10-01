@@ -26,24 +26,23 @@ private val daftarItem = listOf(
     Item(3, "Headphone"),
 )
 
+/**
+ * Layar navigasi yang mengirimkan data ID barang antar halaman.
+ */
 @Composable
 fun Handson2Screen() {
     val navController = rememberNavController()
 
-    // TODO 1: NavHost(navController, startDestination = "home") { ... }
-    // TODO 2: composable("home") { HomeListScreen(navController) }
-    // TODO 3: composable(
-    //             route = "detail/{itemId}",
-    //             arguments = listOf(navArgument("itemId") { type = NavType.IntType })
-    //         ) { backStackEntry ->
-    //             val itemId = backStackEntry.arguments?.getInt("itemId") ?: -1
-    //             DetailItemScreen(navController, itemId)
-    //         }
-
-    Text(
-        "Belum diimplementasikan — lengkapi TODO 1-3 di atas",
-        modifier = Modifier.padding(16.dp)
-    )
+    NavHost(navController, startDestination = "home") {
+        composable("home") { HomeListScreen(navController) }
+        composable(
+            route = "detail/{itemId}",
+            arguments = listOf(navArgument("itemId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val itemId = backStackEntry.arguments?.getInt("itemId") ?: -1
+            DetailItemScreen(navController, itemId)
+        }
+    }
 }
 
 @Composable
@@ -52,7 +51,7 @@ private fun HomeListScreen(navController: NavHostController) {
         Text("Daftar Item")
         daftarItem.forEach { item ->
             Button(onClick = {
-                // TODO 4: navController.navigate("detail/${item.id}")
+                navController.navigate("detail/${item.id}")
             }) {
                 Text(item.nama)
             }

@@ -1,6 +1,15 @@
 package com.itera.pam.p3.latihan
 
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifierimport androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
@@ -15,14 +24,20 @@ val daftarProdukContoh = listOf(
     Produk("Produk 3", "Rp 75.000", Color(0xFF4CAF50)),
 )
 
+/**
+ * Tampilan satu buah produk dengan gambar warna, nama, dan harga.
+ */
 @Composable
 fun ProdukItem(produk: Produk) {
-    // TODO 1: Bungkus dengan Card(modifier = Modifier.fillMaxWidth().padding(8.dp))
-    // TODO 2: Di dalam Card, buat Row(modifier = Modifier.padding(8.dp))
-    // TODO 3: Tambahkan kotak warna sbg pengganti gambar produk (belum ada Coil/AsyncImage):
-    //         Box(modifier = Modifier.size(80.dp).background(produk.warna))
-    // TODO 4: Tambahkan Column(modifier = Modifier.padding(start = 12.dp)) berisi
-    //         Text(produk.nama) dan Text(produk.harga, color = Color.Gray)
+    Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+        Row(modifier = Modifier.padding(8.dp)) {
+            Box(modifier = Modifier.size(80.dp).background(produk.warna))
+            Column(modifier = Modifier.padding(start = 12.dp)) {
+                Text(produk.nama)
+                Text(produk.harga, color = Color.Gray)
+            }
+        }
+    }
 }
 
 @Composable

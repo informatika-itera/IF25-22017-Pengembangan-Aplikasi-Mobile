@@ -1,6 +1,9 @@
 package com.itera.pam.p4.latihan
 
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberimport androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,10 +27,13 @@ import androidx.compose.ui.unit.dp
 // [ ] Button reset (ke 0)
 // [ ] Disable decrement jika 0
 
+/**
+ * Tampilan penghitung yang angkanya akan berubah langsung di layar
+ * ketika ditambahkan, dikurangi (tidak boleh kurang dari 0), atau diatur ulang.
+ */
 @Composable
 fun Handson1Screen() {
-    // TODO: Deklarasikan state untuk count
-    // var count by remember { mutableStateOf(0) }
+    var count by remember { mutableStateOf(0) }
 
     Column(
         modifier = Modifier.fillMaxSize().padding(16.dp),
@@ -36,16 +42,16 @@ fun Handson1Screen() {
     ) {
         Text("Latihan 1: Counter App dengan State")
 
-        // TODO: Tampilkan nilai count, contoh: Text("Count: $count")
+        Text("Count: $count")
 
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Button(onClick = { /* TODO: decrement, jangan sampai < 0 */ }) {
+            Button(onClick = { if (count > 0) count-- }) {
                 Text("-")
             }
-            Button(onClick = { /* TODO: increment */ }) {
+            Button(onClick = { count++ }) {
                 Text("+")
             }
-            Button(onClick = { /* TODO: reset ke 0 */ }) {
+            Button(onClick = { count = 0 }) {
                 Text("Reset")
             }
         }
