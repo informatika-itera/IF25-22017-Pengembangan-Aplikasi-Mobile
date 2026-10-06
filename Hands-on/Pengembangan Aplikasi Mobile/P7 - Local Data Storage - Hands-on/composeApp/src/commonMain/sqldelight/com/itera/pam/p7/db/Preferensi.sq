@@ -1,0 +1,10 @@
+CREATE TABLE Preferensi (
+    key TEXT NOT NULL PRIMARY KEY,
+    prefValue TEXT NOT NULL
+);
+
+selectByKey:
+SELECT prefValue FROM Preferensi WHERE key = ?;
+
+upsert:
+INSERT OR REPLACE INTO Preferensi(key, prefValue) VALUES (?, ?);

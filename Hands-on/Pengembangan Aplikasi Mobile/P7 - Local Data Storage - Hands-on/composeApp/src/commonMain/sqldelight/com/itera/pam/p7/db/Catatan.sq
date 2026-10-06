@@ -1,0 +1,14 @@
+CREATE TABLE Catatan (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    judul TEXT NOT NULL,
+    isi TEXT NOT NULL
+);
+
+selectAll:
+SELECT * FROM Catatan ORDER BY id DESC;
+
+insertCatatan:
+INSERT INTO Catatan(judul, isi) VALUES (?, ?);
+
+deleteById:
+DELETE FROM Catatan WHERE id = ?;
